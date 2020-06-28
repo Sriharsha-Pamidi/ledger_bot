@@ -16,7 +16,7 @@ def remove_last_total(filename):
 		if (len(lines)>2):
 			lines = lines[:-1]
 
-	with open(filename, 'w') as write_file:
+	with open(filename, 'w', newline='') as write_file:
 		csv_writer = csv.writer(write_file)
 		for line in lines:
 			csv_writer.writerow(line)
@@ -50,7 +50,7 @@ def choose_customer():
 	files.sort(key=lambda x: os.path.getctime(x))
 	for (key,value) in enumerate(files,start=100):
 		options[str(key)] = value
-		print(str(key) + ' - ' + value.replace('.csv','').replace(search_dir,''))
+		print(str(key) + ' - ' + value.replace('.csv','').replace(search_dir[:-1],'').replace('\\',''))
 	rkey = input('Enter the customer number:')
 	return options[rkey]
 
@@ -172,7 +172,7 @@ def get_balance(filename):
 			if counter == Tot_rows-1:
 				try:
 					balance = float(i[6])-float(i[5])
-				except ValueError:
+				except IndexError:
 					balance = 'NA'
 			counter+=1
 	return balance
@@ -185,22 +185,22 @@ def get_all_balances():
 	credit_balances = {}
 	for customer in files:
 		bal = get_balance(customer)
-		if bal >= 0:
+		if isinstance(bal, float) and bal >= 0:
 			credit_balances[customer] = bal
 		else: 
 			debit_balances[customer] = bal
 
-	with open("DebitBalances.csv", 'w', newline='') as file:
+	with open("DebitBalances.txt", 'w', newline='') as file:
 			writer = csv.writer(file)
 			writer.writerow(['Name', 'Balance'])
 			for key,val in debit_balances.items():
-				writer.writerow([key.replace('.csv','').replace(search_dir,''),val])
+				writer.writerow([key.replace('.csv','').replace(search_dir[:-1],'').replace('\\',''),val])
 
-	with open("CreditBalances.csv", 'w', newline='') as file:
+	with open("CreditBalances.txt", 'w', newline='') as file:
 		writer = csv.writer(file)
 		writer.writerow(['Name', 'Balance'])
 		for key,val in credit_balances.items():
-			writer.writerow([key.replace('.csv','').replace(search_dir,''),val])
+			writer.writerow([key.replace('.csv','').replace(search_dir[:-1],'').replace('\\',''),val])
 		
 
 if __name__ == '__main__':
