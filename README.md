@@ -10,4 +10,4 @@ Options available are:
 3. Add a new customer
 
 Enter details and one place and all the account type books will be created.
-Creates CSVs for all the customers, updates all the credit and debit balances text files
+Creates CSVs for all the customers, updates all the credit and debit balances text files.
