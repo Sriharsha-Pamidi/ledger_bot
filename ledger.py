@@ -5,6 +5,7 @@ import glob
 import os
 import datetime
 
+#change the working directory as needed.
 search_dir = '/Users/WONDER/Desktop/Accounts/'
 
 def remove_last_total(filename):
